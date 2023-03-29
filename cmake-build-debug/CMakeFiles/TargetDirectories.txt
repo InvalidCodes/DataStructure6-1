@@ -1,0 +1,3 @@
+/Users/ge/Desktop/2022DS/Chapter6-1/cmake-build-debug/CMakeFiles/Chapter6_1.dir
+/Users/ge/Desktop/2022DS/Chapter6-1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ge/Desktop/2022DS/Chapter6-1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
