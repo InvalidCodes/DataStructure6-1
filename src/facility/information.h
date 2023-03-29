@@ -10,22 +10,31 @@
 class Information {
 public:
 private:
-    ///> 整数数据类
+    ///> Integer class.
     enum IntegerDataType {
         age_,
-        height_,
+        height_
     };
 
-    ///> bool数据类
-    enum class BoolDataType : bool {
+    ///> Bool class.
+    enum class BoolDataType : short {
         gender_,  // female:1, male:0
         live_or_not_,  // alive:1; dead:0
+        married_or_not_,  // married:1; unmarried:0; divorced:2; lost of couple: 3
     };
 
-    ///> string数据
+    ///> Relationship class.
+    enum class Relationship{
+        parent_,
+        sibling,
+        cousin
+    };
+
+    ///> String type data.
     std::string name_,
                 birthday_,
                 birth_place_,
+                address_,
                 education_,
                 job_,
                 death_date_;

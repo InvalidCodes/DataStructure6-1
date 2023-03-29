@@ -9,6 +9,6 @@ Node::Node() {
 }
 
 ///> 拷贝构造：数据域e，指针域link
-Node::Node(int REF_IN e, Node *REF_IN leftChild = nullptr, Node *REF_IN rightSibling = nullptr)
-        : data_(e), leftChild_(leftChild), rightSibling_(rightSibling) {
+Node::Node(int REF_IN e, Node *REF_IN firstChild = nullptr, Node *REF_IN nextSibling = nullptr)
+        : data_(e), firstChild_(firstChild), nextSibling_(nextSibling) {
 }
