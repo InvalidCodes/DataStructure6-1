@@ -5,6 +5,8 @@
 #ifndef CHAPTER6_1_SYNTACTIC_SUGAR_H
 #define CHAPTER6_1_SYNTACTIC_SUGAR_H
 
+using Status = bool;
+
 #ifndef attr_reader_val
 /**
  * @brief 将类私有成员变量设置为外界只读

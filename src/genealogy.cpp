@@ -4,33 +4,67 @@
 
 #include "genealogy.h"
 
-Genealogy::Genealogy() {}
 
-bool Genealogy::CreateByFile(Node **p) {}
+Genealogy::Genealogy() {
 
-void Genealogy::Display(Node *p, int REF_IN depth) {}
+}
 
-bool Genealogy::Add(Node *p, const std::string &name, int rel) {}
+bool Genealogy::Login() {
+    return false;
+}
 
-Node *Genealogy::FindPre(Node *p) {}
+bool Genealogy::CreateByFile(Node **p) {
+    return false;
+}
 
-bool Genealogy::Delete(Node *p, const std::string &name) {}
+void Genealogy::Display(Node *p, const int &depth) {
 
-Node *Genealogy::get_root() {}
+}
 
-double Genealogy::GetAge() {}
+Node *Genealogy::get_root() {
+    return nullptr;
+}
 
-double Genealogy::GetRatio() {}
+Node *Genealogy::Search(Node *p, const std::string &name) {
+    return nullptr;
+}
 
-bool Genealogy::Login() {}
+Node *Genealogy::FindPre(Node *p) {
+    return nullptr;
+}
 
-bool Genealogy::RelSearch() {}
+bool Genealogy::Delete(Node *p, const std::string &name) {
+    return false;
+}
 
-bool Genealogy::MemSearch() {}
+bool Genealogy::Update(Node *p, const std::string &name) {
+    return false;
+}
 
-bool Genealogy::Statistics(Node *p) {}
+bool Genealogy::Add(Node *p, const std::string &name, Rel rel) {
+    return false;
+}
 
-bool Genealogy::Update(Node *p, const std::string &name) {}
+bool Genealogy::MemSearch() {
+    return false;
+}
 
-double Genealogy::GetHeight() {}
+bool Genealogy::RelSearch() {
+    return false;
+}
 
+bool Genealogy::Statistics(Node *p) {
+    return false;
+}
+
+double Genealogy::GetAverageAge() {
+    return 0;
+}
+
+double Genealogy::GetAverageHeight() {
+    return 0;
+}
+
+double Genealogy::GetSexRatio() {
+    return 0;
+}
