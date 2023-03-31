@@ -13,38 +13,34 @@ public:
     Genealogy();
 
     ///> Administrator login.
-    bool Login();
-
-    //void set_root(Node *root);
+    bool AdminLogin();
 
     ///> Create a genealogy.
     bool CreateByFile(Node **p);
 
     ///> Display the genealogy.
-    void Display(Node *p, int REF_IN depth);
+    void DisplayGenealogy(Node *p, int REF_IN depth);
 
-    ///> Find the original ancestor the family.
-    Node *get_root();
+    ///> Set the ancestor.
+    void SetAncestor(TripleTree *p);
 
     ///> Search for a family member.
-    Node *Search(Node *p, std::string REF_IN name);
+    TripleTree *SearchMember(Node *p, std::string REF_IN name);
 
     ///> Find the parents of a family member.
-    Node *FindPre(Node *p);
+    TripleTree *SearchParents(Node *p);
 
     ///> Delete a family member.
-    bool Delete(Node *p, std::string REF_IN name);
+    bool DeleteMember(Node *p, std::string REF_IN name);
 
     ///> Update the genealogy.
-    bool Update(Node *p, std::string REF_IN name);
+    bool UpdateGenealogy(Node *p, std::string REF_IN name);
 
     ///> Add a family member.
-    bool Add(Node *p, std::string REF_IN name, Information inf);
-
-    bool MemSearch(); 
+    bool AddMember(Node *p, std::string REF_IN name, Information inf);
 
     ///> Find the relationship of two members.
-    bool RelSearch();
+    bool SearchRelationship();
 
     ///> Statistics data.
     bool Statistics(Node *p);
@@ -57,9 +53,8 @@ public:
     double GetSexRatio();
 
 private:
-    Node *root;
-
-    Information information;
+    TripleTree *root;
+    Information *information;
 
     double average_age_;
     double average_height_;

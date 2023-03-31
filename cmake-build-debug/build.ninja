@@ -64,8 +64,8 @@ build CMakeFiles/Chapter6_1.dir/genealogy.cpp.o: CXX_COMPILER__Chapter6_1_Debug 
   OBJECT_DIR = CMakeFiles/Chapter6_1.dir
   OBJECT_FILE_DIR = CMakeFiles/Chapter6_1.dir
 
-build CMakeFiles/Chapter6_1.dir/facility/tripple-tree.cpp.o: CXX_COMPILER__Chapter6_1_Debug /Users/ge/Desktop/2022DS/Chapter6-1/facility/tripple-tree.cpp || cmake_object_order_depends_target_Chapter6_1
-  DEP_FILE = CMakeFiles/Chapter6_1.dir/facility/tripple-tree.cpp.o.d
+build CMakeFiles/Chapter6_1.dir/facility/triple-tree.cpp.o: CXX_COMPILER__Chapter6_1_Debug /Users/ge/Desktop/2022DS/Chapter6-1/facility/triple-tree.cpp || cmake_object_order_depends_target_Chapter6_1
+  DEP_FILE = CMakeFiles/Chapter6_1.dir/facility/triple-tree.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics -std=gnu++17
   OBJECT_DIR = CMakeFiles/Chapter6_1.dir
   OBJECT_FILE_DIR = CMakeFiles/Chapter6_1.dir/facility
@@ -78,7 +78,7 @@ build CMakeFiles/Chapter6_1.dir/facility/tripple-tree.cpp.o: CXX_COMPILER__Chapt
 #############################################
 # Link the executable Chapter6_1
 
-build Chapter6_1: CXX_EXECUTABLE_LINKER__Chapter6_1_Debug CMakeFiles/Chapter6_1.dir/main.cpp.o CMakeFiles/Chapter6_1.dir/facility/triple-tree-node.cpp.o CMakeFiles/Chapter6_1.dir/genealogy.cpp.o CMakeFiles/Chapter6_1.dir/facility/tripple-tree.cpp.o
+build Chapter6_1: CXX_EXECUTABLE_LINKER__Chapter6_1_Debug CMakeFiles/Chapter6_1.dir/main.cpp.o CMakeFiles/Chapter6_1.dir/facility/triple-tree-node.cpp.o CMakeFiles/Chapter6_1.dir/genealogy.cpp.o CMakeFiles/Chapter6_1.dir/facility/triple-tree.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
   OBJECT_DIR = CMakeFiles/Chapter6_1.dir
   POST_BUILD = :
