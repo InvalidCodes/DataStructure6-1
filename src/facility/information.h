@@ -6,10 +6,10 @@
 #define CHAPTER6_1_INFORMATION_H
 
 #include <string>
+#include "syntactic-sugar.h"
 
 class Information {
 public:
-private:
     ///> Integer class.
     enum IntegerDataType {
         age_,
@@ -24,20 +24,31 @@ private:
     };
 
     ///> Relationship class.
-    enum class Relationship{
+    enum class Relationship {
         parent_,
         sibling,
         cousin
     };
 
     ///> String type data.
+    std::string address_,
+            education_,
+            job_;
+
+    ///> Read only.
+    attr_reader_val(name_, Name)
+
+    attr_reader_val(birthday_, Birthday)
+
+    attr_reader_ref(birth_place_, BirthPlace)
+
+    attr_reader_ref(death_date_, DeathDate)
+
+private:
     std::string name_,
-                birthday_,
-                birth_place_,
-                address_,
-                education_,
-                job_,
-                death_date_;
+            birthday_,
+            birth_place_,
+            death_date_;
 };
 
 #endif //CHAPTER6_1_INFORMATION_H

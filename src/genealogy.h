@@ -6,7 +6,7 @@
 #define CHAPTER6_1_GENEALOGY_H
 
 #include "facility/information.h"
-#include "facility/triple-tree-node.h"
+#include "facility/triple-tree.h"
 
 class Genealogy {
 public:
@@ -39,9 +39,9 @@ public:
     bool Update(Node *p, std::string REF_IN name);
 
     ///> Add a family member.
-    bool Add(Node *p, std::string REF_IN name, Rel rel);
+    bool Add(Node *p, std::string REF_IN name, Information inf);
 
-    bool MemSearch();        //按成员查询
+    bool MemSearch(); 
 
     ///> Find the relationship of two members.
     bool RelSearch();
@@ -57,6 +57,13 @@ public:
     double GetSexRatio();
 
 private:
+    Node *root;
+
+    Information information;
+
+    double average_age_;
+    double average_height_;
+    double sex_ratio_;
 };
 
 #endif //CHAPTER6_1_GENEALOGY_H

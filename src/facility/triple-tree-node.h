@@ -17,8 +17,7 @@ public:
          Node *REF_IN firstChild,
          Node *REF_IN nextSibling);
 
-    /*///> 只读语法糖
-    attr_reader_val(data_, Inf)
+    /**attr_reader_val(data_, Inf)
 
     attr_reader_val(parent_, Parent)
 
