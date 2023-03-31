@@ -6,6 +6,8 @@
 #define CHAPTER6_1_TRIPLE_TREE_NODE_H
 
 #include "syntactic-sugar.h"
+#include <cstdio>
+#include <iostream>
 
 class Node {
 public:

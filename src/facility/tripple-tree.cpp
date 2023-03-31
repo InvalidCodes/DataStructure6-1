@@ -3,8 +3,6 @@
 //
 
 #include <cstdlib>
-#include <cstdio>
-#include <iostream>
 #include "triple-tree.h"
 
 void TripleTree::InitTriTree(Node *t) {

@@ -12,7 +12,6 @@ class Genealogy {
 public:
     Genealogy();
 
-private:
     ///> Administrator login.
     bool Login();
 
@@ -52,8 +51,12 @@ private:
 
     ///> Get the average values.
     double GetAverageAge();
+
     double GetAverageHeight();
+
     double GetSexRatio();
+
+private:
 };
 
 #endif //CHAPTER6_1_GENEALOGY_H
