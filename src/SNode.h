@@ -12,5 +12,5 @@ struct SNode {
 	string address;                             // 住址
 	int condition;                              // 目前状况（0：健在，1：亡故）
 	int death;                                  // 死亡日期
-}p[19];
+} p[19];
 #endif
