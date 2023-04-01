@@ -22,8 +22,15 @@
     return SearchMemberByName(member->nextSibling, name);
 }*/
 
+int SearchRelationship(ChildSiblingTreeNode *member, string name) {
+    if (member == nullptr) {
+        cout << "不存在该成员" << endl;
+        return 0;
+    }
+    return 0;
+}
+
 Status PrintInformation(ChildSiblingTreeNode *member, const char *name) {
-    ChildSiblingTreeNode *p = SearchMemberByName(member, name);
     cout << "成员信息：" << endl;
     cout << "姓名：" << member->name_ << endl;
     cout << "地址：" << member->address_ << endl;
@@ -120,8 +127,7 @@ int main() {
                         cout << "请输入要查询的成员名称：" << endl;
                     cin >> name_;
 
-                    genealogy_node = genealogy.FindNodeByName(genealogy.GetRoot(), name_);
-                    //SearchMemberByName(genealogy_node, name_);
+                    genealogy_node = genealogy.FindNodeByName(name_);
                     cout << "查询成功！" << endl;
                     PrintInformation(genealogy_node, name_);
                     break;
@@ -132,7 +138,7 @@ int main() {
                         cout << "请输入要查询的成员名称：" << endl;
                     cin >> name_;
 
-                    genealogy_node = genealogy.FindNodeByName(genealogy.GetRoot(), name_);
+                    genealogy_node = genealogy.FindNodeByBirthday(genealogy.GetRoot(), name_);
 
                     break;
                 case 5:

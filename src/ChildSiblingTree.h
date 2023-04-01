@@ -31,9 +31,8 @@ public:
     ChildSiblingTreeNode *FirstChild(ChildSiblingTreeNode *cur) const;//返回firstchild
     ChildSiblingTreeNode *NextSibling(ChildSiblingTreeNode *cur) const;//返回nextsibling
     Status GetName(ChildSiblingTreeNode *cur, string &e) const;//
-    ChildSiblingTreeNode *FindNodeByName(ChildSiblingTreeNode *root, string name);
-
-    ChildSiblingTreeNode *FindNodeByBirthday(ChildSiblingTreeNode *root, string birthday)
+    ChildSiblingTreeNode *FindNodeByBirthday(ChildSiblingTreeNode *root, string birthday);
+    ChildSiblingTreeNode* FindNodeByName(string name) const;
 };
 
 void DisplayTWithConcaveShape(const ChildSiblingTree &t, ChildSiblingTreeNode *r, int level);
@@ -69,7 +68,6 @@ ChildSiblingTreeNode *ChildSiblingTree::CreateTreeGhelp(SNode elems[], int paren
     } else
         return NULL;                                    // r非法，建立空树
 }
-
 
 ChildSiblingTree::ChildSiblingTree(SNode elems[], int parents[], int n)
 // 操作结果：建立数据元素为items[],对应结点双亲为parents[],根结点位置为0,结点个数为n的树
@@ -170,18 +168,20 @@ ChildSiblingTreeNode *ChildSiblingTree::NextSibling(ChildSiblingTreeNode *cur) c
 
 /// @brief 指定结点名，遍历查找树结点
 /// @return 结点指针
-ChildSiblingTreeNode *ChildSiblingTree::FindNodeByName(ChildSiblingTreeNode *root, string name) {
-    if (root = nullptr) return nullptr;
-    if (root->name_ == name) {
-        return root;
+ChildSiblingTreeNode* ChildSiblingTree::FindNodeByName(string name) const
+// 操作结果：层次遍历树
+{
+    LinkQueue<ChildSiblingTreeNode *> q;	// 定义队列对象
+    ChildSiblingTreeNode *cur, *p, *result;
+
+    if (root != NULL) q.EnQueue(root);			   // 如果根非空,则根结点指针入队列
+    while (!q.IsEmpty())	{
+        q.DelQueue(cur);						   //  队头结点出队为当前结点cur
+        if(cur->name_==name)
+            return result = cur;
+        for (p = FirstChild(cur); p != NULL;  p = NextSibling(p))
+            q.EnQueue(p);					       // 依次将cur的孩子结点指针入队列
     }
-    ChildSiblingTreeNode *iteration = root->firstChild;   ///< 迭代
-    while (iteration != nullptr) {
-        ChildSiblingTreeNode *result = FindNodeByName(iteration, name);
-        if (result != nullptr) return result;
-        iteration = iteration->nextSibling;
-    }
-    return nullptr;
 }
 
 /// @brief 指定生日，遍历查找树结点

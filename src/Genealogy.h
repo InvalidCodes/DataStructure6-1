@@ -22,7 +22,7 @@ void Menu(){
     cout << "ÇëÊäÈëÄãµÄ²Ù×÷(0~9):" << endl;
 }
 
-ChildSiblingTreeNode *SearchMemberByName(ChildSiblingTreeNode *member, const char *name) {
+/*ChildSiblingTreeNode *SearchMemberByName(ChildSiblingTreeNode *member, const char *name) {
     if (member == nullptr) return nullptr;
     if (std::strcmp(member->name_, name) == 0)
         return member;
@@ -31,7 +31,7 @@ ChildSiblingTreeNode *SearchMemberByName(ChildSiblingTreeNode *member, const cha
     if (iteration != nullptr)
         return iteration;
     return SearchMemberByName(member->nextSibling, name);
-}
+}*/
 
 Status PrintInformation(ChildSiblingTreeNode *member, const char *name) {
     ChildSiblingTreeNode *p = SearchMemberByName(member, name);
