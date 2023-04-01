@@ -1,5 +1,5 @@
-#ifndef __CHILD_SIBLING_TREE_H__
-#define __CHILD_SIBLING_TREE_H__
+#ifndef CHILD_SIBLING_TREE_H_
+#define CHILD_SIBLING_TREE_H_
 
 #include "LinkQueue.h"					// 链队列
 #include "SNode.h"						// 数组结点
@@ -28,7 +28,6 @@ class ChildSiblingTree { //家谱树类
 		ChildSiblingTreeNode *FirstChild(ChildSiblingTreeNode *cur) const;//返回firstchild
 		ChildSiblingTreeNode *NextSibling(ChildSiblingTreeNode *cur) const;//返回nextsibling
 		Status GetName(ChildSiblingTreeNode *cur, string &e) const;//
-		
 };
 
 void DisplayTWithConcaveShape(const ChildSiblingTree &t, ChildSiblingTreeNode *r, int level);
@@ -116,7 +115,7 @@ Status ChildSiblingTree::GetName(ChildSiblingTreeNode *cur, string &e) const
 	if (cur == NULL)
 		return NOT_PRESENT;
 	else	{
-		e = cur->name;			// 用e 求元素值
+		e = cur->name_;			// 用e 求元素值
 		return ENTRY_FOUND;		//  求ENTRY_FOUND
 	}
 }

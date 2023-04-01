@@ -2,6 +2,7 @@
 #define __LK_QUEUE_H__
 
 #include "Node.h"				// 结点类
+#include "Assistance.h"
 
 // 链队列类
 
