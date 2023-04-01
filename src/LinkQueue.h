@@ -1,7 +1,7 @@
 #ifndef __LK_QUEUE_H__
 #define __LK_QUEUE_H__
 
-#include "Node.h"				// 结点类
+#include "LinkQueueNode.h"                // 结点类
 #include "Assistance.h"
 
 // 链队列类
@@ -11,7 +11,7 @@ class LinkQueue
 {
 protected:
 //  链队列实现的数据成员:
-	Node<ElemType> *front, *rear;					// 队头队尾指指
+	LinkQueueNode<ElemType> *front, *rear;					// 队头队尾指指
 
 public:
 	LinkQueue();									// 无参数的构造函数
@@ -33,7 +33,7 @@ template<class ElemType>
 LinkQueue<ElemType>::LinkQueue()
 // 操作结果：构造一个空队列
 {
-	rear = front = new Node<ElemType>;	// 生成链队列头结点
+	rear = front = new LinkQueueNode<ElemType>;	// 生成链队列头结点
 }
 
 template<class ElemType>
@@ -49,7 +49,7 @@ int LinkQueue<ElemType>::GetLength() const
 // 操作结果：返回队列长度			 
 {
 	int count = 0;		// 初始化计数器 
-	for (Node<ElemType> *p = front->next; p != NULL; p = p->next)
+	for (LinkQueueNode<ElemType> *p = front->next; p != NULL; p = p->next)
 		count++;		// 统计链队列中的结点数 
 	return count;
 }
@@ -65,7 +65,7 @@ template<class ElemType>
 void LinkQueue<ElemType>::Clear() 
 // 操作结果：清空队列
 {
-	Node<ElemType> *p = front->next;
+	LinkQueueNode<ElemType> *p = front->next;
     while (p != NULL)	{	// 依次删除队列中的元素结点
         front->next = p->next;
 		delete p;        
@@ -78,7 +78,7 @@ template <class ElemType>
 void LinkQueue<ElemType>::Traverse(void (*Visit)(const ElemType &)) const 
 // 操作结果：依次对队列的每个元素调用函数(*visit)
 {
-	for (Node<ElemType> *p = front->next; p != NULL; p = p->next)
+	for (LinkQueueNode<ElemType> *p = front->next; p != NULL; p = p->next)
 	// 对队列每个元素调用函数(*visit)访问 
 		(*Visit)(p->data);
 }
@@ -90,7 +90,7 @@ Status LinkQueue<ElemType>::DelQueue(ElemType &e)
 //	否则函数返回UNDER_FLOW，
 {
 	if (!IsEmpty()) 	{	// 队列非空
-		Node<ElemType> *p = front->next;	// 指向队列头素
+		LinkQueueNode<ElemType> *p = front->next;	// 指向队列头素
 		e = p->data;						// 用e返回队头元素
 		front->next = p->next;				// front指向下一元素
 		if (rear == p)	// 出队前队列中只有一个元素，出队后为空队列
@@ -120,8 +120,8 @@ Status LinkQueue<ElemType>::EnQueue(const ElemType e)
 // 操作结果：如果系统空间不够，返回OVER_FLOW,
 //	否则插入元素e为新的队尾，返回SUCCESS
 {
-	Node<ElemType> *p; 
-    p = new Node<ElemType>(e);	        // 生成一个新结点
+	LinkQueueNode<ElemType> *p;
+    p = new LinkQueueNode<ElemType>(e);	        // 生成一个新结点
     if (p) { 
        rear->next = p;	                // 将新结点加在队尾
 	   rear = rear->next;				// rear指向新队尾
@@ -135,8 +135,8 @@ template<class ElemType>
 LinkQueue<ElemType>::LinkQueue(const LinkQueue<ElemType> &q)
 // 操作结果：由队列q构造新队列--复制构造函数
 {
-	rear = front = new Node<ElemType>;	// 生成队列头结点
-	for (Node<ElemType> *p = q.front->next; p != NULL; p = p->next)
+	rear = front = new LinkQueueNode<ElemType>;	// 生成队列头结点
+	for (LinkQueueNode<ElemType> *p = q.front->next; p != NULL; p = p->next)
 	// 取q队列每个元素的值,将其在当前队列中作入队列操作
 		EnQueue(p->data);
 }
@@ -147,7 +147,7 @@ LinkQueue<ElemType> &LinkQueue<ElemType>::operator =(const LinkQueue<ElemType> &
 {
 	if (&q != this)	{
 		Clear();       //清除原有队列 
-		for (Node<ElemType> *p = q.front->next; p != NULL; p = p->next)
+		for (LinkQueueNode<ElemType> *p = q.front->next; p != NULL; p = p->next)
 		// 取q队列每个元素的值,将其在当前队列中作入队列操作
 			EnQueue(p->data);
 	}

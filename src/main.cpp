@@ -1,9 +1,7 @@
 #include "Assistance.h"                    // 实用程序软件包
-//#include "ChildSiblingTree.h"			// 孩子兄弟表示树类
+#include "ChildSiblingTree.h"			// 孩子兄弟表示树类
 //include "conio.h"                      // getche的头文件
 //#include "Genealogy.h"
-
-#include "ChildSiblingTree.h"
 
 int SearchRelationship(ChildSiblingTreeNode *member, string name) {
     if (member == nullptr) {
@@ -138,12 +136,20 @@ int main() {
                     if (genealogy.IsEmpty())
                         cout << "暂无族谱，请创建族谱！" << endl;
                     else
-                        cout << "请输入要查询的成员名称：" << endl;
-                    //char name_[10];
-                    //cin >> name_;
+                        cout << "请输入要删除的成员名称：" << endl;
+                    cin >> name_;
+
+                    genealogy_node = genealogy.FindNodeByName(name_);
+                    genealogy.DeleteChild(genealogy,genealogy_node);
                     break;
                 case 8:
-                    cout << "等着你写了，加油" << endl;
+                    if (genealogy.IsEmpty())
+                        cout << "暂无族谱，请创建族谱！" << endl;
+                    else
+                        cout << "请输入要删除的成员名称：" << endl;
+                    cin >> name_;
+
+                    genealogy_node = genealogy.FindNodeByName(name_);
                     break;
             }
         }

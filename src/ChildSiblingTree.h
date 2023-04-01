@@ -2,10 +2,10 @@
 #define CHILD_SIBLING_TREE_H_
 
 #include "LinkQueue.h"                    // 链队列
-#include "SNode.h"                        // 数组结点
+#include "InformationNode.h"                        // 数组结点
 #include "ChildSiblingTreeNode.h"        // 孩子兄弟表示树结点类
 
-struct SNode;
+struct InformationNode;
 // 孩子兄弟表示树类
 
 class ChildSiblingTree { //家谱树类
@@ -18,10 +18,10 @@ protected:
     ChildSiblingTreeNode *CopyTree(ChildSiblingTreeNode *copy);
 
     // 复制树
-    ChildSiblingTreeNode *CreateTreeGhelp(SNode elems[], int parents[], int r, int n);
+    ChildSiblingTreeNode *CreateTreeGhelp(InformationNode elems[], int parents[], int r, int n);
     // 建立数据元素为items[],对应结点双亲为parents[],根结点位置为r,结点个数为n的树，并 求树的根
 public:
-    ChildSiblingTree(SNode elems[], int parents[], int n);
+    ChildSiblingTree(InformationNode elems[], int parents[], int n);
 
 //  孩子兄弟表示树类方法的声明:
     ChildSiblingTree();                                    // 无参数的构造函数
@@ -31,9 +31,12 @@ public:
     ChildSiblingTreeNode *FirstChild(ChildSiblingTreeNode *cur) const;//返回firstchild
     ChildSiblingTreeNode *NextSibling(ChildSiblingTreeNode *cur) const;//返回nextsibling
     Status GetName(ChildSiblingTreeNode *cur, string &e) const;//
+
     ChildSiblingTreeNode *FindNodeByName(string name) const;
 
     ChildSiblingTreeNode *FindNodeByBirthday(string birthday) const;
+
+    Status DeleteChild(ChildSiblingTree tree, ChildSiblingTreeNode *member) const;
 };
 
 void DisplayTWithConcaveShape(const ChildSiblingTree &t, ChildSiblingTreeNode *r, int level);
@@ -45,7 +48,7 @@ void DisplayTWithConcaveShape(const ChildSiblingTree &t, int h);
 
 // 孩子兄弟表示树类的实现部分
 
-ChildSiblingTreeNode *ChildSiblingTree::CreateTreeGhelp(SNode elems[], int parents[], int r, int n)
+ChildSiblingTreeNode *ChildSiblingTree::CreateTreeGhelp(InformationNode elems[], int parents[], int r, int n)
 // 操作结果：建立数据元素为items[],对应结点双亲为parents[],根结点位置为r,结点个数为n的树，并返回树的根
 {
     if (r >= 0 && r < n) {
@@ -70,7 +73,7 @@ ChildSiblingTreeNode *ChildSiblingTree::CreateTreeGhelp(SNode elems[], int paren
         return NULL;                                    // r非法，建立空树
 }
 
-ChildSiblingTree::ChildSiblingTree(SNode elems[], int parents[], int n)
+ChildSiblingTree::ChildSiblingTree(InformationNode elems[], int parents[], int n)
 // 操作结果：建立数据元素为items[],对应结点双亲为parents[],根结点位置为0,结点个数为n的树
 {
     root = CreateTreeGhelp(elems, parents, 0, n);    // 用辅助函数建立树
@@ -186,17 +189,32 @@ ChildSiblingTreeNode *ChildSiblingTree::FindNodeByName(string name) const {
 /// @brief 指定生日，遍历查找树结点
 /// @return 结点指针
 ChildSiblingTreeNode *ChildSiblingTree::FindNodeByBirthday(string birthday) const {
-    LinkQueue<ChildSiblingTreeNode *> q;    // 定义队列对象
+    LinkQueue<ChildSiblingTreeNode *> queue;    ///< 定义队列对象
     ChildSiblingTreeNode *cur, *p, *result;
 
-    if (root != NULL) q.EnQueue(root);               // 如果根非空,则根结点指针入队列
-    while (!q.IsEmpty()) {
-        q.DelQueue(cur);                           //  队头结点出队为当前结点cur
+    if (root != nullptr) queue.EnQueue(root);     ///< 如果根非空,则根结点指针入队列
+    while (!queue.IsEmpty()) {
+        queue.DelQueue(cur);     ///<  队头结点出队为当前结点cur
         if (cur->birthday_ == birthday)
             return result = cur;
-        for (p = FirstChild(cur); p != NULL; p = NextSibling(p))
-            q.EnQueue(p);                           // 依次将cur的孩子结点指针入队列
+        for (p = FirstChild(cur); p != nullptr; p = NextSibling(p))
+            queue.EnQueue(p);    ///< 依次将cur的孩子结点指针入队列
     }
+}
+
+/// @brief 指定名称，删除成员
+Status ChildSiblingTree::DeleteChild(ChildSiblingTree tree, ChildSiblingTreeNode *member) const {
+    ChildSiblingTreeNode *p, *q, *result;
+    int count = 0;
+    for (p = FirstChild(member); p != nullptr; p = NextSibling(p))   ///< 对孩子个数进行计数
+        count++;
+    q = FirstChild(member);
+    for (int n = 1; n < count - 1; n++)
+        q = NextSibling(q);      ///< 查找member的孩子
+    p = q->nextSibling;
+    q->nextSibling = p->nextSibling;     ///< 删除子树
+    tree.Destroy(p);
+    return SUCCESS;
 }
 
 #endif

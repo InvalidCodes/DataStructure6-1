@@ -35,7 +35,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -fcolor-diagnostics"
+					"fragment" : "-g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -fcolor-diagnostics"
 				},
 				{
 					"fragment" : "-std=gnu++17"
@@ -117,12 +117,12 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Node.h",
+			"path" : "LinkQueueNode.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "SNode.h",
+			"path" : "InformationNode.h",
 			"sourceGroupIndex" : 1
 		},
 		{

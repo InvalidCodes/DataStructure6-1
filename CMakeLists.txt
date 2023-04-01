@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(6_2_2 main.cpp
         Assistance.h
-        Node.h SNode.h
+        LinkQueueNode.h InformationNode.h
         LinkQueue.h
         ChildSiblingTreeNode.h ChildSiblingTree.h
         Genealogy.h)
