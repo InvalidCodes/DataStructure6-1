@@ -1,5 +1,5 @@
 #include "Assistance.h"                    // 实用程序软件包
-#include "ChildSiblingTree.h"			// 孩子兄弟表示树类
+#include "ChildSiblingTree.h"            // 孩子兄弟表示树类
 //include "conio.h"                      // getche的头文件
 //#include "Genealogy.h"
 
@@ -22,6 +22,14 @@ Status PrintInformation(ChildSiblingTreeNode *member) {
     cout << "是否已婚：" << member->marriage_ << endl;
     cout << "死亡时间：" << member->death_date << endl;
     return VISITED;
+}
+
+Status JudgeIsEmpty(ChildSiblingTree tree) {
+    if (tree.IsEmpty()) {
+        cout << "暂无族谱，请创建族谱" << endl;
+        return SUCCESS;
+    }
+    return NOT_PRESENT;
 }
 
 void Menu() {
@@ -84,6 +92,8 @@ int main() {
 
 //开始功能目录
     char name_[10], birthday_[20];
+    int position_;
+
     ChildSiblingTree genealogy(p, a, 19); //创建树
     ChildSiblingTreeNode *genealogy_node;
     cout << "树创建成功啦!" << endl;
@@ -105,9 +115,7 @@ int main() {
                     cout << "等着你写了，加油" << endl;
                     break;
                 case 3:
-                    if (genealogy.IsEmpty())
-                        cout << "暂无族谱，请创建族谱！" << endl;
-                    else
+                    if (JudgeIsEmpty(genealogy))
                         cout << "请输入要查询的成员名称：" << endl;
                     cin >> name_;
 
@@ -116,12 +124,9 @@ int main() {
                     PrintInformation(genealogy_node);
                     break;
                 case 4:
-                    if (genealogy.IsEmpty())
-                        cout << "暂无族谱，请创建族谱！" << endl;
-                    else
+                    if (JudgeIsEmpty(genealogy))
                         cout << "请输入要查询的成员生日：" << endl;
                     cin >> birthday_;
-
                     genealogy_node = genealogy.FindNodeByBirthday(birthday_);
                     cout << "查询成功！" << endl;
                     PrintInformation(genealogy_node);
@@ -130,25 +135,25 @@ int main() {
                     cout << "等着你写了，加油" << endl;
                     break;
                 case 6:
-                    cout << "等着你写了，加油" << endl;
+                    if (JudgeIsEmpty(genealogy))
+                        cout << "请输入要添加的成员的父亲名称：" << endl;
+                    cin >> name_;
+                    cout << "请输入要添加的成员的孩子位置：" << endl;
+                    cin >> position_;
+                    genealogy_node = genealogy.FindNodeByName(name_);
+                    genealogy.AddMember(genealogy_node, position_);
                     break;
                 case 7:
-                    if (genealogy.IsEmpty())
-                        cout << "暂无族谱，请创建族谱！" << endl;
-                    else
+                    if (JudgeIsEmpty(genealogy))
                         cout << "请输入要删除的成员名称：" << endl;
                     cin >> name_;
-
                     genealogy_node = genealogy.FindNodeByName(name_);
-                    genealogy.DeleteChild(genealogy,genealogy_node);
+                    genealogy.Destroy(genealogy_node);
                     break;
                 case 8:
-                    if (genealogy.IsEmpty())
-                        cout << "暂无族谱，请创建族谱！" << endl;
-                    else
+                    if (JudgeIsEmpty(genealogy))
                         cout << "请输入要删除的成员名称：" << endl;
                     cin >> name_;
-
                     genealogy_node = genealogy.FindNodeByName(name_);
                     break;
             }

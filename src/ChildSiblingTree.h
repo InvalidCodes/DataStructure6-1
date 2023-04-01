@@ -2,8 +2,8 @@
 #define CHILD_SIBLING_TREE_H_
 
 #include "LinkQueue.h"                    // 链队列
-#include "InformationNode.h"                        // 数组结点
-#include "ChildSiblingTreeNode.h"        // 孩子兄弟表示树结点类
+#include "InformationNode.h"              // 数组结点
+#include "ChildSiblingTreeNode.h"         // 孩子兄弟表示树结点类
 
 struct InformationNode;
 // 孩子兄弟表示树类
@@ -13,8 +13,7 @@ protected:
 //  树的数据成员:
     ChildSiblingTreeNode *root;            // 根指针
 
-//	辅助函数:
-    void Destroy(ChildSiblingTreeNode *&r);        // 销毁以r为根的树
+// 销毁以r为根的树
     ChildSiblingTreeNode *CopyTree(ChildSiblingTreeNode *copy);
 
     // 复制树
@@ -30,13 +29,22 @@ public:
     bool IsEmpty() const;                                // 判断树是否为空
     ChildSiblingTreeNode *FirstChild(ChildSiblingTreeNode *cur) const;//返回firstchild
     ChildSiblingTreeNode *NextSibling(ChildSiblingTreeNode *cur) const;//返回nextsibling
+    ChildSiblingTreeNode *Parent(ChildSiblingTreeNode *r, const ChildSiblingTreeNode *cur) const;
+
     Status GetName(ChildSiblingTreeNode *cur, string &e) const;//
 
-    ChildSiblingTreeNode *FindNodeByName(string name) const;
+    int NodeDegree(ChildSiblingTreeNode *cur) const;
 
-    ChildSiblingTreeNode *FindNodeByBirthday(string birthday) const;
+    ChildSiblingTreeNode *FindNodeByName(const string &name) const;
+
+    ChildSiblingTreeNode *FindNodeByBirthday(const string &birthday) const;
+
+    Status AddMember(ChildSiblingTreeNode *member, int i);
 
     Status DeleteChild(ChildSiblingTree tree, ChildSiblingTreeNode *member) const;
+
+//	辅助函数:
+    void Destroy(ChildSiblingTreeNode *r);
 };
 
 void DisplayTWithConcaveShape(const ChildSiblingTree &t, ChildSiblingTreeNode *r, int level);
@@ -47,7 +55,6 @@ void DisplayTWithConcaveShape(const ChildSiblingTree &t, int h);
 
 
 // 孩子兄弟表示树类的实现部分
-
 ChildSiblingTreeNode *ChildSiblingTree::CreateTreeGhelp(InformationNode elems[], int parents[], int r, int n)
 // 操作结果：建立数据元素为items[],对应结点双亲为parents[],根结点位置为r,结点个数为n的树，并返回树的根
 {
@@ -59,7 +66,7 @@ ChildSiblingTreeNode *ChildSiblingTree::CreateTreeGhelp(InformationNode elems[],
         for (int i = 0; i < n; i++) {    // 查找r的孩子
             if (parents[i] == r) {    // 建立以pos为根的子树
                 subTreeRoot = CreateTreeGhelp(elems, parents, i, n);
-                if (rt->firstChild == NULL) {    // subTreeRoot为rt第一棵子树的根
+                if (rt->firstChild == nullptr) {    // subTreeRoot为rt第一棵子树的根
                     rt->firstChild = subTreeRoot;
                     cur = subTreeRoot;            // cur最新复制的子树的根
                 } else {                // subTreeRoot为cur的下一个兄弟
@@ -70,7 +77,7 @@ ChildSiblingTreeNode *ChildSiblingTree::CreateTreeGhelp(InformationNode elems[],
         }
         return rt;
     } else
-        return NULL;                                    // r非法，建立空树
+        return nullptr;                                    // r非法，建立空树
 }
 
 ChildSiblingTree::ChildSiblingTree(InformationNode elems[], int parents[], int n)
@@ -82,18 +89,18 @@ ChildSiblingTree::ChildSiblingTree(InformationNode elems[], int parents[], int n
 ChildSiblingTree::ChildSiblingTree()
 // 操作结果：构造一个空树
 {
-    root = NULL;                    // 表示树为空
+    root = nullptr;                    // 表示树为空
 }
 
-void ChildSiblingTree::Destroy(ChildSiblingTreeNode *&r)
+void ChildSiblingTree::Destroy(ChildSiblingTreeNode *r)
 // 操作结果：销毁以r为根的树
 {
     ChildSiblingTreeNode *p;
-    if (r != NULL) {
-        for (p = FirstChild(r); p != NULL; p = NextSibling(p))
+    if (r != nullptr) {
+        for (p = FirstChild(r); p != nullptr; p = NextSibling(p))
             Destroy(p);        // 销毁子树
         delete r;                // 销毁根结点
-        r = NULL;
+        r = nullptr;
     }
 }
 
@@ -113,7 +120,7 @@ ChildSiblingTreeNode *ChildSiblingTree::GetRoot() const
 bool ChildSiblingTree::IsEmpty() const
 // 操作结果：判断树是否为空
 {
-    return root == NULL;
+    return root == nullptr;
 }
 
 
@@ -140,7 +147,7 @@ void DisplayTWithConcaveShape(const ChildSiblingTree &t,
         string e;
         t.GetName(r, e);                            // 取出结点r的名字
         cout << e;                                    // 显示结点元素值
-        for (p = t.FirstChild(r); p != NULL; p = t.NextSibling(p))
+        for (p = t.FirstChild(r); p != nullptr; p = t.NextSibling(p))
             DisplayTWithConcaveShape(t, p, level + 1);// 依次显示各棵子树
     }
 }
@@ -155,8 +162,8 @@ void DisplayTWithConcaveShape(const ChildSiblingTree &t)
 ChildSiblingTreeNode *ChildSiblingTree::FirstChild(ChildSiblingTreeNode *cur) const
 // 操作结果：如cur无孩子,则返回NULL,否则返回树结点cur的第一个孩子,
 {
-    if (cur == NULL)
-        return NULL;                // 空结点无孩子
+    if (cur == nullptr)
+        return nullptr;                // 空结点无孩子
     else
         return cur->firstChild;        // firstChild为第一个孩子
 }
@@ -164,35 +171,51 @@ ChildSiblingTreeNode *ChildSiblingTree::FirstChild(ChildSiblingTreeNode *cur) co
 ChildSiblingTreeNode *ChildSiblingTree::NextSibling(ChildSiblingTreeNode *cur) const
 // 操作结果：如果结点cur为空或没有下一个兄弟,则返回NULL,否则返回cur的下一个兄弟
 {
-    if (cur == NULL)
-        return NULL;                // 空结点右兄弟
+    if (cur == nullptr)
+        return nullptr;                // 空结点右兄弟
     else
         return cur->nextSibling;    // nextSibling为下一个兄弟
 }
 
+/// @brief 操作结果：求以r为根的树, 结点cur的双亲
+ChildSiblingTreeNode *ChildSiblingTree::Parent(ChildSiblingTreeNode *r,
+                                               const ChildSiblingTreeNode *cur) const {
+    if (r == nullptr) return nullptr;                // 空二叉树
+    ChildSiblingTreeNode *p;        // 孩子
+    for (p = FirstChild(r); p != nullptr; p = NextSibling(p))
+        if (p == cur) return r;                // cur是r的孩子
+
+    for (p = FirstChild(r); p != nullptr; p = NextSibling(p)) {
+        ChildSiblingTreeNode *q;
+        q = Parent(p, cur);                    // 在子树上求cur的双亲
+        if (q != nullptr) return q;            // 双亲在子树上
+    }
+    return nullptr;                            // 未找到双亲
+}
+
 /// @brief 指定结点名，遍历查找树结点
 /// @return 结点指针
-ChildSiblingTreeNode *ChildSiblingTree::FindNodeByName(string name) const {
+ChildSiblingTreeNode *ChildSiblingTree::FindNodeByName(const string &name) const {
     LinkQueue<ChildSiblingTreeNode *> q;    // 定义队列对象
     ChildSiblingTreeNode *cur, *p, *result;
 
-    if (root != NULL) q.EnQueue(root);               // 如果根非空,则根结点指针入队列
+    if (root != nullptr) q.EnQueue(root);               // 如果根非空,则根结点指针入队列
     while (!q.IsEmpty()) {
         q.DelQueue(cur);                           //  队头结点出队为当前结点cur
         if (cur->name_ == name)
             return result = cur;
-        for (p = FirstChild(cur); p != NULL; p = NextSibling(p))
+        for (p = FirstChild(cur); p != nullptr; p = NextSibling(p))
             q.EnQueue(p);                           // 依次将cur的孩子结点指针入队列
     }
 }
 
 /// @brief 指定生日，遍历查找树结点
 /// @return 结点指针
-ChildSiblingTreeNode *ChildSiblingTree::FindNodeByBirthday(string birthday) const {
+ChildSiblingTreeNode *ChildSiblingTree::FindNodeByBirthday(const string &birthday) const {
     LinkQueue<ChildSiblingTreeNode *> queue;    ///< 定义队列对象
     ChildSiblingTreeNode *cur, *p, *result;
 
-    if (root != nullptr) queue.EnQueue(root);     ///< 如果根非空,则根结点指针入队列
+    if (root != nullptr) queue.EnQueue(root);    ///< 如果根非空,则根结点指针入队列
     while (!queue.IsEmpty()) {
         queue.DelQueue(cur);     ///<  队头结点出队为当前结点cur
         if (cur->birthday_ == birthday)
@@ -202,6 +225,56 @@ ChildSiblingTreeNode *ChildSiblingTree::FindNodeByBirthday(string birthday) cons
     }
 }
 
+/// @brief 求结点的度
+/// @return int度数
+int ChildSiblingTree::NodeDegree(ChildSiblingTreeNode *cur) const {
+    ChildSiblingTreeNode *p;
+    int count = 0;
+    for (p = FirstChild(cur); p != nullptr; p = NextSibling(p))
+        count++;    ///< 对孩子个数进行计数
+    return count;
+}
+
+/// @brief 增加成员
+Status ChildSiblingTree::AddMember(ChildSiblingTreeNode *member, int i) {
+    if (member == nullptr) return NOT_PRESENT;
+    if (i < 1 || i > NodeDegree(member) + 1) return FAIL;
+
+    cout << "请输入基本成员信息：姓名，生日，婚姻，地址" << endl;
+    cin >> member->name_;
+    cin >> member->birthday_;
+    cin >> member->marriage_;
+    cin >> member->address_;
+    cout << "该成员是否生者 （1是0否）" << endl;
+    cin >> member->condition_;
+    if (member->condition_ == 0) {
+        cout << "请输入死亡日期：" << endl;
+        cin >> member->death_date;
+    } else member->death_date = 0;
+    ChildSiblingTreeNode *fChild, *nSibling = nullptr;
+    ChildSiblingTreeNode *new_member = new ChildSiblingTreeNode(member->name_,
+                                                                member->birthday_,
+                                                                member->marriage_,
+                                                                member->address_,
+                                                                member->condition_,
+                                                                member->death_date,
+                                                                fChild, nSibling);
+    /// 申请新结点空间
+    if (i == 1) {
+        new_member->nextSibling = member->firstChild;
+        member->firstChild = new_member;      // new_member插入为member的第一个孩子
+    } else {
+        ChildSiblingTreeNode *p = FirstChild(member);    // 取cur的孩子
+        for (int k = 1; k < i - 1; k++)
+            p = NextSibling(p);       // 求插入位置的前一个兄弟p
+        new_member->nextSibling = p->nextSibling;
+        p->nextSibling = new_member;
+    }
+    cout << "添加新成员成功" << endl;
+    return SUCCESS;
+}
+
+/*
 /// @brief 指定名称，删除成员
 Status ChildSiblingTree::DeleteChild(ChildSiblingTree tree, ChildSiblingTreeNode *member) const {
     ChildSiblingTreeNode *p, *q, *result;
@@ -210,11 +283,13 @@ Status ChildSiblingTree::DeleteChild(ChildSiblingTree tree, ChildSiblingTreeNode
         count++;
     q = FirstChild(member);
     for (int n = 1; n < count - 1; n++)
-        q = NextSibling(q);      ///< 查找member的孩子
+        q = NextSibling(q);     ///< 查找member的孩子
     p = q->nextSibling;
-    q->nextSibling = p->nextSibling;     ///< 删除子树
-    tree.Destroy(p);
+    q->nextSibling = p->nextSibling;
+    tree.Destroy(p);    ///< 删除子树
+    cout << "删除成功" << endl;
     return SUCCESS;
 }
+*/
 
 #endif

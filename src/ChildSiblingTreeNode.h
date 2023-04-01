@@ -21,8 +21,8 @@ struct ChildSiblingTreeNode { //定义家庭成员信息
     ChildSiblingTreeNode();                        // 无参数的构造函数
     ChildSiblingTreeNode(string m_name, string m_birth, int m_marriage,
                          string m_address, int m_condition, int m_death,            // 有参数的构造函数
-                         ChildSiblingTreeNode *fChild = NULL,
-                         ChildSiblingTreeNode *nSibling = NULL);
+                         ChildSiblingTreeNode *fChild = nullptr,
+                         ChildSiblingTreeNode *nSibling = nullptr);
 
 };
 
