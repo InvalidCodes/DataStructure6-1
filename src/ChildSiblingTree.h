@@ -31,8 +31,9 @@ public:
     ChildSiblingTreeNode *FirstChild(ChildSiblingTreeNode *cur) const;//返回firstchild
     ChildSiblingTreeNode *NextSibling(ChildSiblingTreeNode *cur) const;//返回nextsibling
     Status GetName(ChildSiblingTreeNode *cur, string &e) const;//
-    ChildSiblingTreeNode *FindNodeByBirthday(ChildSiblingTreeNode *root, string birthday);
-    ChildSiblingTreeNode* FindNodeByName(string name) const;
+    ChildSiblingTreeNode *FindNodeByName(string name) const;
+
+    ChildSiblingTreeNode *FindNodeByBirthday(string birthday) const;
 };
 
 void DisplayTWithConcaveShape(const ChildSiblingTree &t, ChildSiblingTreeNode *r, int level);
@@ -168,26 +169,34 @@ ChildSiblingTreeNode *ChildSiblingTree::NextSibling(ChildSiblingTreeNode *cur) c
 
 /// @brief 指定结点名，遍历查找树结点
 /// @return 结点指针
-ChildSiblingTreeNode* ChildSiblingTree::FindNodeByName(string name) const
-// 操作结果：层次遍历树
-{
-    LinkQueue<ChildSiblingTreeNode *> q;	// 定义队列对象
+ChildSiblingTreeNode *ChildSiblingTree::FindNodeByName(string name) const {
+    LinkQueue<ChildSiblingTreeNode *> q;    // 定义队列对象
     ChildSiblingTreeNode *cur, *p, *result;
 
-    if (root != NULL) q.EnQueue(root);			   // 如果根非空,则根结点指针入队列
-    while (!q.IsEmpty())	{
-        q.DelQueue(cur);						   //  队头结点出队为当前结点cur
-        if(cur->name_==name)
+    if (root != NULL) q.EnQueue(root);               // 如果根非空,则根结点指针入队列
+    while (!q.IsEmpty()) {
+        q.DelQueue(cur);                           //  队头结点出队为当前结点cur
+        if (cur->name_ == name)
             return result = cur;
-        for (p = FirstChild(cur); p != NULL;  p = NextSibling(p))
-            q.EnQueue(p);					       // 依次将cur的孩子结点指针入队列
+        for (p = FirstChild(cur); p != NULL; p = NextSibling(p))
+            q.EnQueue(p);                           // 依次将cur的孩子结点指针入队列
     }
 }
 
 /// @brief 指定生日，遍历查找树结点
 /// @return 结点指针
-ChildSiblingTreeNode *ChildSiblingTree::FindNodeByBirthday(ChildSiblingTreeNode *root, string birthday) {
-    return nullptr;
+ChildSiblingTreeNode *ChildSiblingTree::FindNodeByBirthday(string birthday) const {
+    LinkQueue<ChildSiblingTreeNode *> q;    // 定义队列对象
+    ChildSiblingTreeNode *cur, *p, *result;
+
+    if (root != NULL) q.EnQueue(root);               // 如果根非空,则根结点指针入队列
+    while (!q.IsEmpty()) {
+        q.DelQueue(cur);                           //  队头结点出队为当前结点cur
+        if (cur->birthday_ == birthday)
+            return result = cur;
+        for (p = FirstChild(cur); p != NULL; p = NextSibling(p))
+            q.EnQueue(p);                           // 依次将cur的孩子结点指针入队列
+    }
 }
 
 #endif

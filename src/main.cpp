@@ -5,23 +5,6 @@
 
 #include "ChildSiblingTree.h"
 
-/*ChildSiblingTreeNode *SearchMemberByName(ChildSiblingTreeNode *member, const char *name) {
-    if (member == nullptr) {
-        cout << "该成员不存在" << endl;
-        return nullptr;
-    }
-    if (std::strcmp(member->name_, name) == 0)
-        return member;
-    if (member->firstChild == nullptr) {
-        cout << "该成员无左孩子" << endl;
-        return nullptr;
-    }
-    ChildSiblingTreeNode *iteration = SearchMemberByName(member->firstChild, name);
-    if (iteration != nullptr)
-        return iteration;
-    return SearchMemberByName(member->nextSibling, name);
-}*/
-
 int SearchRelationship(ChildSiblingTreeNode *member, string name) {
     if (member == nullptr) {
         cout << "不存在该成员" << endl;
@@ -30,7 +13,9 @@ int SearchRelationship(ChildSiblingTreeNode *member, string name) {
     return 0;
 }
 
-Status PrintInformation(ChildSiblingTreeNode *member, const char *name) {
+Status PrintInformation(ChildSiblingTreeNode *member) {
+    if (member == nullptr)
+        return NOT_PRESENT;
     cout << "成员信息：" << endl;
     cout << "姓名：" << member->name_ << endl;
     cout << "地址：" << member->address_ << endl;
@@ -38,6 +23,7 @@ Status PrintInformation(ChildSiblingTreeNode *member, const char *name) {
     cout << "生存状况：" << member->condition_ << endl;
     cout << "是否已婚：" << member->marriage_ << endl;
     cout << "死亡时间：" << member->death_date << endl;
+    return VISITED;
 }
 
 void Menu() {
@@ -53,7 +39,7 @@ void Menu() {
     cout << "                   7.删除成员                    " << endl;
     cout << "                 8.修改成员信息                  " << endl;
     cout << "         -------------------------------         " << endl;
-    cout << "请输入你的操作(0~9):" << endl;
+    cout << "请输入你的操作 (0~9): " << endl;
 }
 
 int main() {
@@ -99,7 +85,7 @@ int main() {
     in_file.close();
 
 //开始功能目录
-    char name_[10];
+    char name_[10], birthday_[20];
     ChildSiblingTree genealogy(p, a, 19); //创建树
     ChildSiblingTreeNode *genealogy_node;
     cout << "树创建成功啦!" << endl;
@@ -129,17 +115,18 @@ int main() {
 
                     genealogy_node = genealogy.FindNodeByName(name_);
                     cout << "查询成功！" << endl;
-                    PrintInformation(genealogy_node, name_);
+                    PrintInformation(genealogy_node);
                     break;
                 case 4:
                     if (genealogy.IsEmpty())
                         cout << "暂无族谱，请创建族谱！" << endl;
                     else
-                        cout << "请输入要查询的成员名称：" << endl;
-                    cin >> name_;
+                        cout << "请输入要查询的成员生日：" << endl;
+                    cin >> birthday_;
 
-                    genealogy_node = genealogy.FindNodeByBirthday(genealogy.GetRoot(), name_);
-
+                    genealogy_node = genealogy.FindNodeByBirthday(birthday_);
+                    cout << "查询成功！" << endl;
+                    PrintInformation(genealogy_node);
                     break;
                 case 5:
                     cout << "等着你写了，加油" << endl;
