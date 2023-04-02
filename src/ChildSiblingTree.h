@@ -29,11 +29,11 @@ public:
     bool IsEmpty() const;                                // 判断树是否为空
     ChildSiblingTreeNode *FirstChild(ChildSiblingTreeNode *cur) const;//返回firstchild
     ChildSiblingTreeNode *NextSibling(ChildSiblingTreeNode *cur) const;//返回nextsibling
-    ChildSiblingTreeNode *Parent(ChildSiblingTreeNode *r, const ChildSiblingTreeNode *cur) const;
+    ChildSiblingTreeNode *Parent(ChildSiblingTreeNode *r, const ChildSiblingTreeNode *member) const;
 
     Status GetName(ChildSiblingTreeNode *cur, string &e) const;//
 
-    int NodeDegree(ChildSiblingTreeNode *cur) const;
+    int NodeDegree(ChildSiblingTreeNode *member) const;
 
     ChildSiblingTreeNode *FindNodeByName(const string &name) const;
 
@@ -179,33 +179,38 @@ ChildSiblingTreeNode *ChildSiblingTree::NextSibling(ChildSiblingTreeNode *cur) c
 
 /// @brief 操作结果：求以r为根的树, 结点cur的双亲
 ChildSiblingTreeNode *ChildSiblingTree::Parent(ChildSiblingTreeNode *r,
-                                               const ChildSiblingTreeNode *cur) const {
+                                               const ChildSiblingTreeNode *member) const {
     if (r == nullptr) return nullptr;                // 空二叉树
     ChildSiblingTreeNode *p;        // 孩子
     for (p = FirstChild(r); p != nullptr; p = NextSibling(p))
-        if (p == cur) return r;                // cur是r的孩子
+        if (p == member) return r;                // cur是r的孩子
 
     for (p = FirstChild(r); p != nullptr; p = NextSibling(p)) {
         ChildSiblingTreeNode *q;
-        q = Parent(p, cur);                    // 在子树上求cur的双亲
+        q = Parent(p, member);                    // 在子树上求cur的双亲
         if (q != nullptr) return q;            // 双亲在子树上
     }
     return nullptr;                            // 未找到双亲
 }
 
+/// @brief
+//ChildSiblingTreeNode* ChildSiblingTree::PrintByGeneration(const ChildSiblingTreeNode*member,
+                                                          //const ChildSiblingTreeNode *cur)const{
+
+//}
+
 /// @brief 指定结点名，遍历查找树结点
 /// @return 结点指针
 ChildSiblingTreeNode *ChildSiblingTree::FindNodeByName(const string &name) const {
-    LinkQueue<ChildSiblingTreeNode *> q;    // 定义队列对象
+    LinkQueue<ChildSiblingTreeNode *> queue;    // 定义队列对象
     ChildSiblingTreeNode *cur, *p, *result;
-
-    if (root != nullptr) q.EnQueue(root);               // 如果根非空,则根结点指针入队列
-    while (!q.IsEmpty()) {
-        q.DelQueue(cur);                           //  队头结点出队为当前结点cur
+    if (root != nullptr) queue.EnQueue(root);               // 如果根非空,则根结点指针入队列
+    while (!queue.IsEmpty()) {
+        queue.DelQueue(cur);                           //  队头结点出队为当前结点cur
         if (cur->name_ == name)
             return result = cur;
         for (p = FirstChild(cur); p != nullptr; p = NextSibling(p))
-            q.EnQueue(p);                           // 依次将cur的孩子结点指针入队列
+            queue.EnQueue(p);                           // 依次将cur的孩子结点指针入队列
     }
 }
 
@@ -227,19 +232,17 @@ ChildSiblingTreeNode *ChildSiblingTree::FindNodeByBirthday(const string &birthda
 
 /// @brief 求结点的度
 /// @return int度数
-int ChildSiblingTree::NodeDegree(ChildSiblingTreeNode *cur) const {
-    ChildSiblingTreeNode *p;
+int ChildSiblingTree::NodeDegree(ChildSiblingTreeNode *member) const {
+    ChildSiblingTreeNode *first_child;
     int count = 0;
-    for (p = FirstChild(cur); p != nullptr; p = NextSibling(p))
+    for (first_child = FirstChild(member); first_child != nullptr; first_child = NextSibling(first_child))
         count++;    ///< 对孩子个数进行计数
     return count;
 }
 
 /// @brief 增加成员
 Status ChildSiblingTree::AddMember(ChildSiblingTreeNode *member, int i) {
-    if (member == nullptr) return NOT_PRESENT;
-    if (i < 1 || i > NodeDegree(member) + 1) return FAIL;
-
+    //if (i < 1 || i > NodeDegree(member) + 1) return FAIL;
     cout << "请输入基本成员信息：姓名，生日，婚姻，地址" << endl;
     cin >> member->name_;
     cin >> member->birthday_;
@@ -264,11 +267,11 @@ Status ChildSiblingTree::AddMember(ChildSiblingTreeNode *member, int i) {
         new_member->nextSibling = member->firstChild;
         member->firstChild = new_member;      // new_member插入为member的第一个孩子
     } else {
-        ChildSiblingTreeNode *p = FirstChild(member);    // 取cur的孩子
+        ChildSiblingTreeNode *first_child = FirstChild(member);    // 取cur的孩子
         for (int k = 1; k < i - 1; k++)
-            p = NextSibling(p);       // 求插入位置的前一个兄弟p
-        new_member->nextSibling = p->nextSibling;
-        p->nextSibling = new_member;
+            first_child = NextSibling(first_child);       // 求插入位置的前一个兄弟p
+        new_member->nextSibling = first_child->nextSibling;
+        first_child->nextSibling = new_member;
     }
     cout << "添加新成员成功" << endl;
     return SUCCESS;

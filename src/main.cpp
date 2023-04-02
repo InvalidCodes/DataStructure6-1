@@ -118,7 +118,6 @@ int main() {
                     if (JudgeIsEmpty(genealogy))
                         cout << "请输入要查询的成员名称：" << endl;
                     cin >> name_;
-
                     genealogy_node = genealogy.FindNodeByName(name_);
                     cout << "查询成功！" << endl;
                     PrintInformation(genealogy_node);
@@ -132,7 +131,15 @@ int main() {
                     PrintInformation(genealogy_node);
                     break;
                 case 5:
-                    cout << "等着你写了，加油" << endl;
+                    if (JudgeIsEmpty(genealogy))
+                        cout << "请输入要查询的成员1姓名：" << endl;
+                    cin >> name_;
+                    genealogy_node = genealogy.FindNodeByName(name_);
+                    ChildSiblingTreeNode *member;
+                    char name_2[10];
+                    cout << "请输入要查询的成员2姓名：" << endl;
+                    cin >> name_2;
+                    member = genealogy.FindNodeByName(name_2);
                     break;
                 case 6:
                     if (JudgeIsEmpty(genealogy))
